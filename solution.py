@@ -11,11 +11,13 @@ def solution(p: float, x: np.array) -> tuple:
     # Это будет вашим решением
     # Не меняйте название функции и её аргументы
     n = len(x)
-    mean_x = np.mean(x)
-    std_x = np.std(x, ddof=1)
-    t_alpha = t.ppf(1 - (1 - p) / 2, n - 1)
-    left_bound = mean_x - t_alpha * std_x / np.sqrt(n)
-    right_bound = mean_x + t_alpha * std_x / np.sqrt(n)
-    return (left_bound, right_bound)
+    s = np.std(x, ddof=1) #выборочное стандартное отклонение
+    mu = np.mean(x) # выборочное среднее
+    alpha = 1 - p # уровень значимости
+    t = norm.ppf(1 - alpha/2) # квантиль для нормального распределения
+    left = mu - t * s / np.sqrt(n)
+    right = mu + t * s / np.sqrt(n)
+    return (left, right)
+
 
 
