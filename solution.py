@@ -11,10 +11,11 @@ def solution(p: float, x: np.array) -> tuple:
     # Это будет вашим решением
     # Не меняйте название функции и её аргументы
     n = len(x)
-    sample_mean = np.mean(x)
-    sample_std = np.std(x)/(n**0.5)
-    z_alpha_2 = norm.ppf(1 - (1 - p)/2)
-    left_bound = sample_mean - z_alpha_2 * sample_std
-    right_bound = sample_mean + z_alpha_2 * sample_std
+    mean_x = np.mean(x)
+    std_x = np.std(x, ddof=1)
+    t_alpha = t.ppf(1 - (1 - p) / 2, n - 1)
+    left_bound = mean_x - t_alpha * std_x / np.sqrt(n)
+    right_bound = mean_x + t_alpha * std_x / np.sqrt(n)
     return (left_bound, right_bound)
+
 
